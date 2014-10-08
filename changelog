@@ -1,0 +1,5 @@
+libpcan (7.12-1) unstable; urgency=low
+
+  * Initial commit with ReMake build system port
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 08 Oct 2014 17:32:00 +0200

@@ -50,24 +50,24 @@ remake_pack_deb(
   DEPENDS libpcan
 )
 
-# remake_distribute_deb(
-#   DISTRIBUTION lucid
-#   SECTION libs
-#   UPLOAD ppa:kralf/asl
-#   DEPENDS dkms remake pkg-config libpopt-dev
-#   PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
-# )
-# remake_distribute_deb(
-#   DISTRIBUTION precise
-#   SECTION libs
-#   UPLOAD ppa:kralf/asl
-#   DEPENDS dkms remake pkg-config libpopt-dev
-#   PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
-# )
-# remake_distribute_deb(
-#   DISTRIBUTION trusty
-#   SECTION libs
-#   UPLOAD ppa:kralf/asl
-#   DEPENDS dkms remake pkg-config libpopt-dev
-#   PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
-# )
+remake_distribute_deb(
+  DISTRIBUTION lucid
+  SECTION libs
+  UPLOAD ppa:kralf/asl
+  DEPENDS dkms remake pkg-config libpopt-dev
+  PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
+)
+remake_distribute_deb(
+  DISTRIBUTION precise
+  SECTION libs
+  UPLOAD ppa:kralf/asl
+  DEPENDS dkms remake pkg-config libpopt-dev
+  PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
+)
+remake_distribute_deb(
+  DISTRIBUTION trusty
+  SECTION libs
+  UPLOAD ppa:kralf/asl
+  DEPENDS dkms remake pkg-config libpopt-dev
+  PASS CMAKE_BUILD_TYPE LIBPCAN_GIT_REVISION
+)

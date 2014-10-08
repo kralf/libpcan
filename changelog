@@ -1,3 +1,9 @@
+libpcan (7.12-2) unstable; urgency=low
+
+  * Release distributions
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 08 Oct 2014 17:33:00 +0200
+ 
 libpcan (7.12-1) unstable; urgency=low
 
   * Initial commit with ReMake build system port

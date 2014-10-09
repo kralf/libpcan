@@ -1,3 +1,10 @@
+libpcan (7.12-3) unstable; urgency=low
+
+  * Changed mechanism for finding libpopt (does not have a pkg-config file
+    in lucid)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 09 Oct 2014 07:49:00 +0200
+ 
 libpcan (7.12-2) unstable; urgency=low
 
   * Release distributions

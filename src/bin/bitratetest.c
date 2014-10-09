@@ -62,8 +62,8 @@ const char *current_release;
 // CODE 
 static void hlpMsg(void)
 {
-  printf("bitratetest - a small test the calculation of BTR0BTR1 data from pcan.\n");
-  printf("usage:   bitratetest [-f=devicenode] [-?]\n");
+  printf("pcan-bitrate - a small test the calculation of BTR0BTR1 data from pcan.\n");
+  printf("usage:   pcan-bitrate [-f=devicenode] [-?]\n");
   printf("         -f=devicenode - path to devicefile, default=%s\n", DEFAULT_NODE);
   printf("         -? or --help  - this help\n");
   printf("\n");
@@ -74,10 +74,10 @@ static void my_private_exit(int error)
 {
   if (h)
   {
-    print_diag("bitratetest");
+    print_diag("pcan-bitrate");
     CAN_Close(h);
   }
-  printf("bitratetest: finished (%d).\n\n", error);
+  printf("pcan-bitrate: finished (%d).\n\n", error);
   exit(error);
 }
 
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   errno = 0;
 
   current_release = CURRENT_RELEASE;
-  disclaimer("bitratetest");
+  disclaimer("pcan-bitrate");
 
   // decode command line arguments
   for (i = 1; i < argc; i++)
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 	      
 	    default:
 	      errno = EINVAL;
-	      perror("bitratetest: unknown command line argument");
+	      perror("pcan-bitrate: unknown command line argument");
 	      my_private_exit(errno);
 	      break;
 	   }
@@ -143,10 +143,10 @@ int main(int argc, char *argv[])
     // get version info
     errno = CAN_VersionInfo(h, txt);
     if (!errno)
-      printf("bitratetest: driver version = %s\n", txt);
+      printf("pcan-bitrate: driver version = %s\n", txt);
     else
     {
-      perror("bitratetest: CAN_VersionInfo()");
+      perror("pcan-bitrate: CAN_VersionInfo()");
       my_private_exit(errno);
     }
 
@@ -160,16 +160,16 @@ int main(int argc, char *argv[])
 			if (i == 6250)
 				i = 10000;
 				
-    	printf("bitratetest: %d bits/sec \t->BTR0BTR1=0x%04x\n", i + 1,  LINUX_CAN_BTR0BTR1(h, i + 1));
-    	printf("             %d bits/sec \t->BTR0BTR1=0x%04x\n", i    ,  LINUX_CAN_BTR0BTR1(h, i));
-    	printf("             %d bits/sec \t->BTR0BTR1=0x%04x\n", i - 1,  LINUX_CAN_BTR0BTR1(h, i - 1));
+    	printf("pcan-bitrate: %d bits/sec \t->BTR0BTR1=0x%04x\n", i + 1,  LINUX_CAN_BTR0BTR1(h, i + 1));
+    	printf("              %d bits/sec \t->BTR0BTR1=0x%04x\n", i    ,  LINUX_CAN_BTR0BTR1(h, i));
+    	printf("              %d bits/sec \t->BTR0BTR1=0x%04x\n", i - 1,  LINUX_CAN_BTR0BTR1(h, i - 1));
     };
     printf("\n");
   }
   else
   {
     errno = nGetLastError();
-    perror("bitratetest: CAN_Open()");
+    perror("pcan-bitrate: CAN_Open()");
   }
     
   my_private_exit(errno);

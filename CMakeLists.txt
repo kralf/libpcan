@@ -23,6 +23,7 @@ remake_add_directories(
   rules
   COMPONENT udev
 )
+remake_add_directories(data)
 
 remake_pack_deb(
   COMPONENT kernel-source

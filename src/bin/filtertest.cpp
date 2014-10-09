@@ -63,8 +63,8 @@ const char *current_release;
 // CODE 
 static void hlpMsg(void)
 {
-  printf("filtertest - a small test program to test CAN filter settings together with PCAN chardev driver.\n");
-  printf("usage:   filtertest [-f=devicenode] {{[-l=low_CAN_ID] [-h=highest_CAN_ID] [-m=MSGTYPE]} | {[-c]}} [-?]\n");
+  printf("pcan-filter - a small test program to test CAN filter settings together with PCAN chardev driver.\n");
+  printf("usage:   pcan-filter [-f=devicenode] {{[-l=low_CAN_ID] [-h=highest_CAN_ID] [-m=MSGTYPE]} | {[-c]}} [-?]\n");
   printf("options: -f - devicenode - path to devicefile, default=%s\n", DEFAULT_NODE);
   printf("         -l - lowest CAN ID to pass, e.g, '-l=0x200' (default: 0).\n");
   printf("         -u - most upper CAN ID to pass, e.g. '-u=0x201' (default: 0x7FFFFFFF).\n");
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   errno = 0;
 
   current_release = CURRENT_RELEASE;
-  disclaimer("filtertest");
+  disclaimer("pcan-filter");
 
   // decode command line arguments
   for (i = 1; i < argc; i++)
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
           break;
         default:
           errno = EINVAL;
-          printf("filtertest: unknown command line argument (%s)\n", ptr);
+          printf("pcan-filter: unknown command line argument (%s)\n", ptr);
           errno = -1;
           goto error;
           break;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      printf("filtertest: unknown command line argument (%s)\n", ptr);
+      printf("pcan-filter: unknown command line argument (%s)\n", ptr);
       errno = -1;
       goto error;
     }
@@ -155,14 +155,14 @@ int main(int argc, char *argv[])
   
   if (verbose)
   {
-    printf("filtertest: device-node = %s\n", szDevNode);
+    printf("pcan-filter: device-node = %s\n", szDevNode);
     if (clear)
-      printf("filtertest: clear the filter chain.\n");
+      printf("pcan-filter: clear the filter chain.\n");
     else
     {
-      printf("filtertest: lowest CAN ID to pass      = 0x%08x\n", lower_ID);
-      printf("filtertest: highest CAN ID to pass     = 0x%08x\n", upper_ID);
-      printf("filtertest: message type flags to pass = 0x%02x\n", msgtype);
+      printf("pcan-filter: lowest CAN ID to pass      = 0x%08x\n", lower_ID);
+      printf("pcan-filter: highest CAN ID to pass     = 0x%08x\n", upper_ID);
+      printf("pcan-filter: message type flags to pass = 0x%02x\n", msgtype);
     }    
   }
   
@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
   // get driver version info
   if ((!h) && (verbose))
   {
-    perror("filtertest: LINUX_CAN_Open()");
+    perror("pcan-filter: LINUX_CAN_Open()");
     goto error;
   }
   else
@@ -185,10 +185,10 @@ int main(int argc, char *argv[])
     // get version info
     errno = CAN_VersionInfo(h, txt);
     if (!errno)
-      printf("filtertest: driver version = %s\n", txt);
+      printf("pcan-filter: driver version = %s\n", txt);
     else
     {
-      perror("filtertest: CAN_VersionInfo()");
+      perror("pcan-filter: CAN_VersionInfo()");
       goto error;
     }
   }
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
     if (err)
     {
       errno = err;
-      perror("filtertest: CAN_ResetFilter()");
+      perror("pcan-filter: CAN_ResetFilter()");
       goto error;
     }
   }
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
     if (err)
     {
       errno = err;
-      perror("filtertest: CAN_MsgFilter()");
+      perror("pcan-filter: CAN_MsgFilter()");
       goto error;
     }
   }

@@ -1,4 +1,4 @@
-//****************************************************************************
+//**************3**************************************************************
 // Copyright (C) 2001-2009  PEAK System-Technik GmbH
 //
 // linux@peak-system.com 
@@ -73,10 +73,10 @@ void do_exit(int error)
 {
   if (h) 
   {
-    print_diag("receivetest");
+    print_diag("pcan-receive");
     CAN_Close(h);
   }
-  printf("receivetest: finished (%d).\n\n", error);
+  printf("pcan-receive: finished (%d).\n\n", error);
   exit(error);
 }
 
@@ -127,7 +127,7 @@ int read_loop(bool display_on)
     
     if (LINUX_CAN_Read(h, &m)) 
     {
-      perror("receivetest: LINUX_CAN_Read()");
+      perror("pcan-receive: LINUX_CAN_Read()");
       return errno;
     }
     else 
@@ -141,11 +141,11 @@ int read_loop(bool display_on)
         if ((int)status < 0) 
         {
           errno = nGetLastError();
-          perror("receivetest: CAN_Status()");
+          perror("pcan-receive: CAN_Status()");
           return errno;
         }
         else
-          printf("receivetest: pending CAN status 0x%04x read.\n", (__u16)status);
+          printf("pcan-receive: pending CAN status 0x%04x read.\n", (__u16)status);
       }
     }
   }
@@ -155,8 +155,8 @@ int read_loop(bool display_on)
 
 static void hlpMsg(void)
 {
-  printf("receivetest - a small test program which receives and prints CAN messages.\n");
-  printf("usage:   receivetest {[-f=devicenode] | {[-t=type] [-p=port [-i=irq]]}} [-b=BTR0BTR1] [-e] [-?]\n");
+  printf("pcan-receive - a small test program which receives and prints CAN messages.\n");
+  printf("usage:   pcan-receive {[-f=devicenode] | {[-t=type] [-p=port [-i=irq]]}} [-b=BTR0BTR1] [-e] [-?]\n");
   printf("options: -f - devicenode - path to devicefile, default=%s\n", DEFAULT_NODE);
   printf("         -t - type of interface, e.g. 'pci', 'sp', 'epp', 'isa', 'pccard' or 'usb' (default: pci).\n");
   printf("         -p - port in hex notation if applicable, e.g. 0x378 (default: 1st port of type).\n");
@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
   errno = 0;
 
   current_release = CURRENT_RELEASE;
-  disclaimer("receivetest");
+  disclaimer("pcan-receive");
 
   init();
 
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
         if (!nType)
         {
           errno = EINVAL;
-          printf("receivetest: unknown type of interface!\n");
+          printf("pcan-receive: unknown type of interface!\n");
           goto error;
         }
         bTypeGiven = true;
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
         break;
       default:
         errno = EINVAL;
-        perror("receivetest: unknown command line argument!\n");
+        perror("pcan-receive: unknown command line argument!\n");
         goto error;
         break;
     }
@@ -255,18 +255,18 @@ int main(int argc, char *argv[])
   if (bDevNodeGiven && bTypeGiven)
   {
     errno = EINVAL;
-    perror("receivetest: device node and type together is useless");
+    perror("pcan-receive: device node and type together is useless");
     goto error;
   }
 
   // give some information back
   if (!bTypeGiven)
   {
-    printf("receivetest: device node=\"%s\"\n", szDevNode);
+    printf("pcan-receive: device node=\"%s\"\n", szDevNode);
   }
   else
   {
-    printf("receivetest: type=%s", getNameOfInterface(nType));
+    printf("pcan-receive: type=%s", getNameOfInterface(nType));
     if (nType == HW_USB)
     {
       if (dwPort)
@@ -306,7 +306,7 @@ int main(int argc, char *argv[])
     h = LINUX_CAN_Open(szDevNode, O_RDWR);
     if (!h)
     {
-      printf("receivetest: can't open %s\n", szDevNode);
+      printf("pcan-receive: can't open %s\n", szDevNode);
       goto error;
     }
   }
@@ -320,7 +320,7 @@ int main(int argc, char *argv[])
     h = CAN_Open(nType, dwPort, wIrq);
     if (!h)
     {
-      printf("receivetest: can't open %s device.\n", getNameOfInterface(nType));
+      printf("pcan-receive: can't open %s device.\n", getNameOfInterface(nType));
       goto error;
     }
   }
@@ -331,9 +331,9 @@ int main(int argc, char *argv[])
  // get version info
   errno = CAN_VersionInfo(h, txt);
   if (!errno)
-    printf("receivetest: driver version = %s\n", txt);
+    printf("pcan-receive: driver version = %s\n", txt);
   else {
-    perror("receivetest: CAN_VersionInfo()");
+    perror("pcan-receive: CAN_VersionInfo()");
     goto error;
   }
 
@@ -343,7 +343,7 @@ int main(int argc, char *argv[])
     errno = CAN_Init(h, wBTR0BTR1, nExtended);
     if (errno) 
     {
-      perror("receivetest: CAN_Init()");
+      perror("pcan-receive: CAN_Init()");
       goto error;
     }
   }

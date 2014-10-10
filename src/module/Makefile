@@ -1,6 +1,13 @@
 ##########################
 # where your kernel sources are
-KERNELDIR ?= /lib/modules/`uname -r`/build
+PWD := $(shell pwd)
+
+KERNELDIR  ?= /lib/modules/`uname -r`/build
+KERNELSRC  ?= /usr/src/linux-headers-$(shell uname -r)
+KERNELMODS ?= /lib/modules/$(shell uname -r)
+KERNELINC  ?= $(shell if test -d $(KERNELSRC)/include/generated ;\
+                then echo "$(KERNELSRC)/include/generated" ;     \
+                else echo "$(KERNELSRC)/include/linux"     ; fi  )
 
 GCC = gcc
 DEPMOD = /sbin/depmod
@@ -37,10 +44,27 @@ endif
 # end switches and defines
 ##########################
 
-PWD := $(shell pwd)
+##########################
+# configure netdev support when kernel is compiled with CONFIG_CAN
+ifeq ($(NET), AUTO_NETDEV_SUPPORT)
+HASAUTOCONF_H := $(shell if test -f $(KERNELINC)/autoconf.h ; then echo yes ; else echo no; fi )
 
-KERNELSRC ?= /usr/src/linux-headers-$(shell uname -r)
-KERNELMODS ?= /lib/modules/$(shell uname -r)
+ifeq ($(HASAUTOCONF_H),no)
+$(error "AUTO_NETDEV_SUPPORT: Cannot find $(KERNELINC)/autoconf.h !")
+else
+SOCKETCAN := $(shell cpp -dM -I$(KERNELSRC)/include $(KERNELINC)/autoconf.h | grep -c CONFIG_CAN)
+
+ifeq ($(SOCKETCAN),0)
+NET = NO_NETDEV_SUPPORT
+else
+NET = NETDEV_SUPPORT
+endif
+
+endif
+endif
+
+# end configure netdev support
+##########################
 
 EXTRA_CFLAGS = $(CMODFLAGS)
 EXTRA_CFLAGS += -I$(PWD) -D$(DBG) -D$(MOD) -D$(PAR) -D$(USB) -D$(PCI)

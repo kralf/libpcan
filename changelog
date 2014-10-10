@@ -1,3 +1,10 @@
+libpcan (7.12-6) unstable; urgency=low
+
+  * Added socketcan build system support for kernel module sources
+    (evaluating AUTO_NETDEV_SUPPORT in Makefile)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 10 Oct 2014 12:52:00 +0200
+ 
 libpcan (7.12-5) unstable; urgency=low
 
   * Added PEAK module blacklisting
